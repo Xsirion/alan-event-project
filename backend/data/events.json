@@ -1,0 +1,80 @@
+[
+    {
+      "id": 1,
+      "title": "Bieg Uliczny o Puchar Prezydenta",
+      "date": "2025-09-14T10:00:00",
+      "description": "Coroczny bieg uliczny dla wszystkich miłośników sportu. Kategorie wiekowe, medale dla każdego uczestnika.",
+      "image": "/images/run.jpg",
+      "category": "Sport",
+      "phone": "+48 502 123 456",
+      "email": "kontakt@biegslaski.pl",
+      "location": "Rybnik, Park Kozie Góry"
+    },
+    {
+      "id": 2,
+      "title": "Letni Festiwal Filmowy",
+      "date": "2025-08-15T20:30:00",
+      "description": "Pokazy filmów pod gołym niebem. Zabierz koc i przyjaciół! Repertuar obejmuje klasyki i kino europejskie.",
+      "image": "/images/cinema.jpg",
+      "category": "Kultura",
+      "phone": "+48 503 234 567",
+      "email": "info@kinoletnie.pl",
+      "location": "Katowice, Dolina Trzech Stawów"
+    },
+    {
+      "id": 3,
+      "title": "Koncert Rockowy – Silesia Live",
+      "date": "2025-08-30T19:00:00",
+      "description": "Najlepsze zespoły rockowe z regionu i nie tylko. Mocna dawka gitarowych brzmień!",
+      "image": "/images/rock.jpg",
+      "category": "Kultura",
+      "phone": "+48 504 987 654",
+      "email": "bilety@silesialive.pl",
+      "location": "Gliwice, Arena Gliwice"
+    },
+    {
+      "id": 4,
+      "title": "Targi Zdrowia i Ekologii",
+      "date": "2025-09-05T11:00:00",
+      "description": "Wystawcy z branży zdrowia, kosmetyków naturalnych, eko żywności. Darmowe konsultacje z dietetykami.",
+      "image": "/images/health.jpg",
+      "category": "Zdrowie",
+      "phone": "+48 500 321 111",
+      "email": "eko@targi-zdrowia.pl",
+      "location": "Zabrze, Hala MOSiR"
+    },
+    {
+      "id": 5,
+      "title": "Rodzinny Piknik Sportowy",
+      "date": "2025-08-18T12:00:00",
+      "description": "Zabawy dla dzieci, konkursy z nagrodami, turniej siatkówki i grill na zakończenie!",
+      "image": "/images/picnic.jpg",
+      "category": "Sport",
+      "phone": "+48 509 654 789",
+      "email": "info@sportpiknik.pl",
+      "location": "Tychy, Stadion Miejski"
+    },
+    {
+      "id": 6,
+      "title": "Wieczór z Poezją Śląską",
+      "date": "2025-09-02T18:30:00",
+      "description": "Spotkanie autorskie z poetami ze Śląska, czytanie poezji przy kawie i muzyce na żywo.",
+      "image": "/images/poetry.jpg",
+      "category": "Kultura",
+      "phone": "+48 508 111 222",
+      "email": "kontakt@slaskipoeci.pl",
+      "location": "Chorzów, Miejski Dom Kultury"
+    },
+    {
+      "id": 7,
+      "title": "Zajęcia Nordic Walking dla Seniorów",
+      "date": "2025-08-12T08:30:00",
+      "description": "Zajęcia z instruktorem, trasy dostosowane do różnych poziomów kondycji.",
+      "image": "/images/nordic-walking.jpg",
+      "category": "Zdrowie",
+      "phone": "+48 506 222 333",
+      "email": "seniorzy@aktywnirazem.pl",
+      "location": "Żory, Rezerwat Łężczok"
+    }
+  ]
+  
