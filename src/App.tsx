@@ -1,9 +1,9 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Root from './components/Root'
-import EventList from './components/EventList'
-import AddEvent from './components/AddEvent'
-import EventDetail from './components/EventDetail'
-import Error from './components/Error'
+import Root from './components/pages/Root'
+import EventList from './components/pages/EventList'
+import AddEvent from './components/pages/AddEvent'
+import EventDetail from './components/pages/EventDetail'
+import Error from './components/pages/Error'
 import './App.css'
 
 const router = createBrowserRouter([
