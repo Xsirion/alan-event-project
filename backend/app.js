@@ -20,23 +20,46 @@ app.get("/events", async (req, res) => {
     res.json(JSON.parse(events));
 });
 
-app.post("/events", async (req, res) => {
-    const newEvent = req.body.events;
-    console.log(newEvent);
+app.get("/events/:id", async (req, res) => {
+    const events = await fs.readFile('./data/events.json', 'utf8');
+    const allEvents = JSON.parse(events);
+    const event = allEvents.find(event => event.id === parseInt(req.params.id));
+    res.json(event);
+});
 
-    if (
-        newEvent.title && 
-        newEvent.date && 
-        newEvent.description && 
-        newEvent.image && 
-        newEvent.category && 
-        newEvent.phone && 
-        newEvent.email && 
-        newEvent.location
-    ) {
-        res.status(201).json(newEvent);
-    } else {
-        res.status(400).json({ message: 'Invalid event data' });
+app.post("/events", async (req, res) => {
+    try {
+        const eventData = req.body;
+        console.log('Received event data:', eventData);
+
+        if (
+            eventData.title && 
+            eventData.date && 
+            eventData.description && 
+            eventData.location
+        ) {
+            const newEvent = {
+                ...eventData,
+                id: Math.floor(Math.random() * 1000),
+            };
+            const events = await fs.readFile('./data/events.json', 'utf8');
+            const allEvents = JSON.parse(events);
+            allEvents.push(newEvent);
+            
+            await fs.writeFile('./data/events.json', JSON.stringify(allEvents, null, 2));
+            
+            res.status(201).json({ 
+                message: 'Event added successfully',
+                event: newEvent 
+            });
+        } else {
+            res.status(400).json({ 
+                message: 'Missing required fields'
+            });
+        }
+    } catch (error) {
+        console.error('Error adding event:', error);
+        res.status(500).json({ message: 'Error adding event' });
     }
 });
 
