@@ -26,10 +26,20 @@ app.get("/events", async (req, res) => {
 
 app.get("/events/:id", async (req, res) => {
     try {
-    const events = await fs.readFile('./data/events.json', 'utf8');
-    const allEvents = JSON.parse(events);
-    const event = allEvents.find(event => event.id === parseInt(req.params.id));
-    res.json(event);
+        const eventId = parseInt(req.params.id);
+
+        if (isNaN(eventId)) {
+            return res.status(400).json({ message: 'Invalid event ID' });
+        }
+
+        const events = await fs.readFile('./data/events.json', 'utf8');
+        const allEvents = JSON.parse(events);
+        const event = allEvents.find(event => event.id === eventId);
+        if (!event) {
+            return res.status(404).json({ message: 'Event not found' });
+        }
+        
+        res.json(event);
     } catch (error) {
         res.status(500).json({ message: 'Error reading event' });
     }
