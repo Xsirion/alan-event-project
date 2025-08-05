@@ -1,7 +1,9 @@
+import { Dayjs } from "dayjs";
+
 export interface Event {
   id: number;
   title: string;
-  date: string;
+  date: Dayjs;
   description: string;
   image: string;
   category: Category;

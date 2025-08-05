@@ -1,134 +1,181 @@
 import { Button, TextField, Select, Box, MenuItem, InputLabel, FormControl, Typography } from "@mui/material";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { useState } from "react";
-import { Dayjs } from "dayjs";
 import { categories } from "../../models/event.model";
+import type { FormikHelpers } from "formik";
+import type { Event } from "../../models/event.model";
+import { Formik, Form } from "formik";
+import { initialValues, validationSchema } from "../../util/validation";
 
 export default function AddEvent() {
-
-    const [isLoading, setIsLoading] = useState(false);
-    const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
     
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        setIsLoading(true);
+    const handleSubmit = async (values: Omit<Event, 'id'>, {setSubmitting, resetForm}: FormikHelpers<Omit<Event, 'id'>>) => {
+        setSubmitting(true);
+        console.log(values);
+        try {
+            console.log(values);
+        const eventData = {
+            ...values,
+            date: values.date ? values.date.format('YYYY-MM-DD HH:mm:ss') : null
+          };
 
-        const formData = new FormData(event.target as HTMLFormElement);
-        if (selectedDate) {
-            formData.set('date', selectedDate.toISOString());
-        }
-        const eventData = Object.fromEntries(formData.entries());
-        console.log(eventData);
 
-        fetch('http://localhost:3000/events', {
+        const response = await fetch('http://localhost:3000/events', {
             method: 'POST',
             body: JSON.stringify(eventData),
             headers: {
                 'Content-Type': 'application/json',
             },
         });
+        
+        if (response.ok) {
+            resetForm();
+        }
+    } catch (error) {
+        console.error('Błąd podczas dodawania wydarzenia:', error);
+    } finally {
+        setSubmitting(false);
+    }
     };
 
     return (
-        <Box sx={{ maxWidth: 600, mx: 'auto', p: 3 }}>
-            <Typography variant="h4" component="h1" gutterBottom>
+        <Box>
+            <Typography variant="h3" component="h1" gutterBottom>
                 Dodaj wydarzenie
             </Typography>
 
-            <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                <TextField 
-                    label="Tytuł" 
-                    name="title" 
-                    required 
-                    fullWidth
-                    variant="outlined"
-                />
-                
-                <TextField 
-                    label="Opis" 
-                    name="description" 
-                    required 
-                    fullWidth
-                    multiline
-                    rows={4}
-                    variant="outlined"
-                />
-                
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker 
-                        label="Data" 
-                        value={selectedDate}
-                        onChange={(newValue) => setSelectedDate(newValue)}
-                        slotProps={{
-                            textField: {
-                                required: true,
-                                fullWidth: true,
-                                variant: 'outlined'
-                            }
-                        }}
-                    />
-                </LocalizationProvider>
-                
-                <TextField 
-                    label="Lokalizacja" 
-                    name="location" 
-                    required 
-                    fullWidth
-                    variant="outlined"
-                />
-                
-                <TextField 
-                    label="URL obrazka" 
-                    name="image" 
-                    fullWidth
-                    variant="outlined"
-                    placeholder="https://example.com/image.jpg"
-                />
-                
-                <FormControl fullWidth required>
-                    <InputLabel>Kategoria</InputLabel>
-                    <Select 
-                        name="category" 
-                        label="Kategoria"
-                        defaultValue=""
-                    >
-                        {categories.map((category) => (
-                            <MenuItem key={category} value={category}>
-                                {category}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
-                
-                <TextField 
-                    label="Telefon" 
-                    name="phone" 
-                    fullWidth
-                    variant="outlined"
-                    type="tel"
-                />
-                
-                <TextField 
-                    label="Email" 
-                    name="email" 
-                    fullWidth
-                    variant="outlined"
-                    type="email"
-                />
-                
-                <Button 
-                    type="submit" 
-                    variant="contained" 
-                    size="large"
-                    disabled={isLoading}
-                    sx={{ mt: 2 }}
-                >
-                    {/* {isLoading ? 'Dodawanie...' : 'Dodaj wydarzenie'} */}
-                    Dodaj wydarzenie
-                </Button>
-            </Box>
+            <Formik
+                initialValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={handleSubmit}
+            >
+                {({ values, errors, touched, handleChange, handleBlur, setFieldValue, isSubmitting, resetForm }) => (
+                    <Form style={{ display: 'flex', flexDirection: 'column', gap: '16px', minWidth: '600px' }}>
+                        <TextField 
+                            label="Tytuł" 
+                            name="title" 
+                            value={values.title}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            error={touched.title && Boolean(errors.title)}
+                            helperText={touched.title && errors.title}
+                            fullWidth
+                            variant="outlined"
+                        />
+                        
+                        <TextField 
+                            label="Opis" 
+                            name="description" 
+                            value={values.description}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            error={touched.description && Boolean(errors.description)}
+                            helperText={touched.description && errors.description}
+                            fullWidth
+                            multiline
+                            rows={4}
+                            variant="outlined"
+                        />
+                        
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DateTimePicker
+                                label="Data" 
+                                value={values.date}
+                                onChange={(newValue) => setFieldValue('date', newValue)}
+                                slotProps={{
+                                    textField: {
+                                        error: touched.date && Boolean(errors.date),
+                                        helperText: touched.date && errors.date ? String(errors.date) : '',
+                                        fullWidth: true,
+                                        variant: 'outlined'
+                                    }
+                                }}
+                            />
+                        </LocalizationProvider>
+                        
+                        <TextField 
+                            label="Lokalizacja" 
+                            name="location" 
+                            value={values.location}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            error={touched.location && Boolean(errors.location)}
+                            helperText={touched.location && errors.location}
+                            fullWidth
+                            variant="outlined"
+                        />
+                        
+                        <TextField 
+                            label="URL obrazka" 
+                            name="image" 
+                            value={values.image}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            error={touched.image && Boolean(errors.image)}
+                            helperText={touched.image && errors.image}
+                            fullWidth
+                            variant="outlined"
+                            placeholder="https://example.com/image.jpg"
+                        />
+                        
+                        <FormControl fullWidth error={touched.category && Boolean(errors.category)}>
+                            <InputLabel>Kategoria</InputLabel>
+                            <Select 
+                                name="category" 
+                                value={values.category}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                label="Kategoria"
+                            >
+                                {categories.map((category) => (
+                                    <MenuItem key={category} value={category}>
+                                        {category}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                            {touched.category && errors.category && (
+                                <Typography variant="caption" color="error" sx={{ mt: 0.5, ml: 1.5 }}>
+                                    {errors.category}
+                                </Typography>
+                            )}
+                        </FormControl>
+                        
+                        <TextField 
+                            label="Telefon" 
+                            name="phone" 
+                            value={values.phone}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            error={touched.phone && Boolean(errors.phone)}
+                            helperText={touched.phone && errors.phone}
+                            fullWidth
+                            variant="outlined"
+                            type="tel"
+                        />
+                        
+                        <TextField 
+                            label="Email" 
+                            name="email" 
+                            value={values.email}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            error={touched.email && Boolean(errors.email)}
+                            helperText={touched.email && errors.email}
+                            fullWidth
+                            variant="outlined"
+                            type="email"
+                        />
+                        
+                        <Button type="submit" variant="contained" size="large" disabled={isSubmitting}>
+                            {isSubmitting ? 'Dodawanie...' : 'Dodaj wydarzenie'}
+                        </Button>
+                        <Button type='button' variant="outlined" size='large' onClick={() => resetForm()}>
+                            Reset
+                        </Button>
+                    </Form>
+                )}
+            </Formik>
         </Box>
     );
 }

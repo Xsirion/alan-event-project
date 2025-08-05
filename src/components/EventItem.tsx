@@ -22,7 +22,7 @@ export default function EventItem({event}: {event: Event}) {
                         {event.description}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                        {formatDate(event.date)}
+                        {formatDate(event.date?.toLocaleString() || '')}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
                         {event.location}
