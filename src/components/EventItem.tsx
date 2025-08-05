@@ -12,7 +12,7 @@ export default function EventItem({event}: {event: Event}) {
     }
 
     return (
-        <Card sx={{ maxWidth: 500 }}>
+        <Card sx={{ maxWidth: 500, flex: '0 0 500px' }}>
                 <CardMedia component="img" height="140" image={getImageUrl(event.image)} alt={event.title} />
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div">

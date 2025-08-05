@@ -1,36 +1,30 @@
-import { useState, useEffect } from "react";
 import EventItem from "../EventItem";
 import styles from "./EventList.module.css";
-import type { Event } from "../../models/event.model.ts";
+import useHttp from "../../hooks/useHttp.ts";
+import { Alert } from "@mui/material";
+
+const requestConfig = {
+    method: "GET", 
+    headers: {
+        "Content-Type": "application/json"
+    }
+}
 
 export default function EventList() {
 
-    const [loadedEvents, setLoadedEvents] = useState<Event[]>([]);
+    const { data: loadedEvents, isLoading, error } = useHttp(
+        "http://localhost:3000/events", 
+        requestConfig
+    );
 
-    useEffect(() => {
-        
-    async function fetchEvents() {
-        try {
-            const response = await fetch("http://localhost:3000/events");
-            const events = await response.json();
-            console.log(events);
-            setLoadedEvents(events)
-        } catch (error) {
-            console.error("Error fetching events:", error);
-        }
-    }
+    if (isLoading) return <Alert severity="info">Ładowanie...</Alert>;
+    if (error) return <Alert severity="error">Błąd: {error}</Alert>;
 
-    fetchEvents();
-    }, []);
-
-
-  return (
-    <>
+    return (
         <div className={styles.eventList}>
             {loadedEvents.map(event => 
                 <EventItem key={event.id} event={event} />
             )}
         </div>
-    </>
-  );
+    );
 }
