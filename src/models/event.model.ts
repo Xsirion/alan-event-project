@@ -1,4 +1,5 @@
 import { Dayjs } from "dayjs";
+import type {Category} from "../enums/categories.enum.ts";
 
 export interface Event {
   id: number;
@@ -11,14 +12,3 @@ export interface Event {
   email: string;
   location: string;
 }
-
-export type Category = typeof categories[number];
-
-export const categories = [
-    'Sport',
-    'Kultura', 
-    'Edukacja',
-    'Rozrywka',
-    'Zdrowie',
-    'Inne'
-] as const;

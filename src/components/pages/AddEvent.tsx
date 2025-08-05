@@ -2,11 +2,11 @@ import { Button, TextField, Select, Box, MenuItem, InputLabel, FormControl, Typo
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { categories } from "../../models/event.model";
 import type { FormikHelpers } from "formik";
-import type { Event } from "../../models/event.model";
+import type { Event } from "../../models/event.model.ts";
 import { Formik, Form } from "formik";
 import { initialValues, validationSchema } from "../../util/validation";
+import { categories } from "../../enums/categories.enum.ts";
 
 export default function AddEvent() {
     

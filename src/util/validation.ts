@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import * as Yup from 'yup';
-import { categories, type Event } from "../models/event.model";
+import { type Event } from "../models/event.model.ts";
+import { categories } from "../enums/categories.enum.ts";
 
 export const validationSchema = Yup.object({
     title: Yup.string()

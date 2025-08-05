@@ -1,5 +1,5 @@
 import { Typography, CardContent, CardMedia, Card, Button, CardActions } from "@mui/material";
-import type { Event } from "../models/event.model";
+import type { Event } from "../models/event.model.ts";
 import { formatDate } from "../util/formating";
 import { getImageUrl } from "../util/imageUtil";
 import { useNavigate } from "react-router-dom";

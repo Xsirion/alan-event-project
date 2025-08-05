@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import type { Event } from "../../models/event.model";
+import type { Event } from "../../models/event.model.ts";
 import { Typography, Paper, CardMedia, Button } from "@mui/material";
 import { getImageUrl } from "../../util/imageUtil";
 

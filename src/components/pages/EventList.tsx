@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import EventItem from "../EventItem";
 import styles from "./EventList.module.css";
-import type { Event } from "../../models/event.model";
+import type { Event } from "../../models/event.model.ts";
 
 export default function EventList() {
 
@@ -26,11 +26,11 @@ export default function EventList() {
 
   return (
     <>
-        <ul className={styles.eventList}>
+        <div className={styles.eventList}>
             {loadedEvents.map(event => 
                 <EventItem key={event.id} event={event} />
             )}
-        </ul>
+        </div>
     </>
   );
 }
