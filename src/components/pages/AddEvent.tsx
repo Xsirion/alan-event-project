@@ -5,39 +5,33 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import type { FormikHelpers } from "formik";
 import type { Event } from "../../models/event.model.ts";
 import { Formik, Form } from "formik";
-import { initialValues, validationSchema } from "../../util/validation";
+import { initialValues, validationSchema } from "../../utils/validation.ts";
 import { categories } from "../../enums/categories.enum.ts";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { addEvent } from "../../store/slices/eventsSlice";
 
 export default function AddEvent() {
+    const dispatch = useAppDispatch();
     
-    const handleSubmit = async (values: Omit<Event, 'id'>, {setSubmitting, resetForm}: FormikHelpers<Omit<Event, 'id'>>) => {
-        setSubmitting(true);
-        console.log(values);
-        try {
-            console.log(values);
+const handleSubmit = async (
+    values: Omit<Event, 'id'>, 
+    {setSubmitting, resetForm}: FormikHelpers<Omit<Event, 'id'>>) => {
+    setSubmitting(true);
+
+    try {
         const eventData = {
             ...values,
             date: values.date ? values.date.format('YYYY-MM-DD HH:mm:ss') : null
-          };
+        };
 
-
-        const response = await fetch('http://localhost:3000/events', {
-            method: 'POST',
-            body: JSON.stringify(eventData),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-        
-        if (response.ok) {
-            resetForm();
-        }
+        await dispatch(addEvent(eventData)).unwrap();
+        resetForm();
     } catch (error) {
         console.error('Błąd podczas dodawania wydarzenia:', error);
     } finally {
         setSubmitting(false);
     }
-    };
+};
 
     return (
         <Box>

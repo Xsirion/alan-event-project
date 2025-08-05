@@ -1,30 +1,30 @@
+import { useEffect } from "react";
 import EventItem from "../EventItem";
 import styles from "./EventList.module.css";
-import useHttp from "../../hooks/useHttp.ts";
+import { useAppSelector } from "../../hooks/useAppSelector";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { fetchEvents } from "../../store/slices/eventsSlice";
 import { Alert } from "@mui/material";
 
-const requestConfig = {
-    method: "GET", 
-    headers: {
-        "Content-Type": "application/json"
-    }
-}
-
 export default function EventList() {
+    const dispatch = useAppDispatch();
+    const { events: loadedEvents, loading, error } = useAppSelector((state) => state.events);
 
-    const { data: loadedEvents, isLoading, error } = useHttp(
-        "http://localhost:3000/events", 
-        requestConfig
-    );
+    useEffect(() => {
+        dispatch(fetchEvents());
+    }, [dispatch]);
 
-    if (isLoading) return <Alert severity="info">Ładowanie...</Alert>;
+    if (loading) return <Alert severity="info">Ładowanie...</Alert>;
     if (error) return <Alert severity="error">Błąd: {error}</Alert>;
 
+
     return (
-        <div className={styles.eventList}>
-            {loadedEvents.map(event => 
-                <EventItem key={event.id} event={event} />
-            )}
-        </div>
+        <>
+            <div className={styles.eventList}>
+                {loadedEvents.map(event => 
+                    <EventItem key={event.id} event={event} />
+                )}
+            </div>
+        </>
     );
 }
