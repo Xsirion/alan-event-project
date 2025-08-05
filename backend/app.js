@@ -16,15 +16,23 @@ app.use((req, res, next) => {
   });
 
 app.get("/events", async (req, res) => {
+    try {
     const events = await fs.readFile('./data/events.json', 'utf8');
     res.json(JSON.parse(events));
+    } catch (error) {
+        res.status(500).json({ message: 'Error reading events' });
+    }
 });
 
 app.get("/events/:id", async (req, res) => {
+    try {
     const events = await fs.readFile('./data/events.json', 'utf8');
     const allEvents = JSON.parse(events);
     const event = allEvents.find(event => event.id === parseInt(req.params.id));
     res.json(event);
+    } catch (error) {
+        res.status(500).json({ message: 'Error reading event' });
+    }
 });
 
 app.post("/events", async (req, res) => {
@@ -36,7 +44,9 @@ app.post("/events", async (req, res) => {
             eventData.title && 
             eventData.date && 
             eventData.description && 
-            eventData.location
+            eventData.location &&
+            eventData.category &&
+            eventData.phone
         ) {
             const newEvent = {
                 ...eventData,
