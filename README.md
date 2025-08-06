@@ -1,69 +1,44 @@
-# React + TypeScript + Vite
+# ALAN-PROJECT-REACT
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Projekt został stworzony jako zadanie rekrutacyjne i zawiera wybrane funkcjonalności.
 
-Currently, two official plugins are available:
+- Strona z listą wydarzeń
+• pobieranie danych do wyświetlania
+• wyświetlenie pobranych danych jako lista
+• przycisk Dodaj wydarzenie kierujący do formularza dodawania
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Strona z wyświetlaniem wydarzenia
+• pobieranie danych do wyświetlania
+• wyświetlenie pobranych danych jako wydarzenia
 
-## Expanding the ESLint configuration
+Strona z formularzem dodawania wydarzenia z polami
+Przycisk Zapisz wydarzenie po naciśnięciu którego zostaną wysłane
+Przycisk Wyczyść czyszczący formularz z wypełnionych dany
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+# 🔧 Technologie
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Główne technologie/frameworki:
+- React
+- TypeScript
+- Express
+- CSS / MaterialUi
+- Formik
+- Redux
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+# 🚀 Uruchomienie lokalne
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Aby uruchomić projekt należy:
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+```bash
+git clone https://github.com/Xsirion/alan-event-project.git
+cd alan-event-project
+npm install
+# Uruchom frontend
+npm run dev
+# przejdź do katalogu backend i zainstaluj zależności
+cd backend
+npm install
+# Uruchom backend
+npm start
+# uruchomienie testów jednostkowych
+npm test

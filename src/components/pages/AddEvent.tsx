@@ -165,7 +165,7 @@ const handleSubmit = async (
                             {isSubmitting ? 'Dodawanie...' : 'Dodaj wydarzenie'}
                         </Button>
                         <Button type='button' variant="outlined" size='large' onClick={() => resetForm()}>
-                            Reset
+                            Wyczyść
                         </Button>
                     </Form>
                 )}
