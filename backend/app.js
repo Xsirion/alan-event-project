@@ -48,7 +48,6 @@ app.get("/events/:id", async (req, res) => {
 app.post("/events", async (req, res) => {
     try {
         const eventData = req.body;
-        console.log('Received event data:', eventData);
 
         if (
             eventData.title && 
